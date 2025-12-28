@@ -1,31 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Subject
-from django.http import JsonResponse
 
-
-def add_subject_ajax(request):
-    if request.method == 'POST':
-        name = request.POST.get('name')
-        credits = int(request.POST.get('credits'))
-        grade = request.POST.get('grade')
-
-        subject = Subject.objects.create(
-            name=name,
-            credits=credits,
-            letter_grade=grade
-        )
-
-        return JsonResponse({
-            'id': subject.id,
-            'name': subject.name,
-            'credits': subject.credits,
-            'grade': subject.letter_grade,
-            'points': subject.grade_point,
-        })
-    
 
 def delete_subject(request, pk):
-    subject = get_object_or_404(Subject, pk = pk) 
+    subject = get_object_or_404(Subject, pk=pk) 
     subject.delete()
     return redirect('gpa_page')
 
